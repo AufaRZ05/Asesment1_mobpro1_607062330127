@@ -7,7 +7,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -48,11 +51,15 @@ fun MainScreen() {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ScreenContent(modifier: Modifier = Modifier) {
     var namaMerek by remember { mutableStateOf("") }
     var harga by remember { mutableStateOf("") }
     var stok by remember { mutableStateOf("") }
+    var expanded by remember { mutableStateOf(false) }
+    var pilihanKategori by remember { mutableStateOf("Pilih kategori") }
+    val kategori = listOf(R.string.lampu, R.string.kipas_angin, R.string.speaker)
 
     Column(
         modifier = modifier.fillMaxSize().padding(16.dp),
@@ -98,7 +105,36 @@ fun ScreenContent(modifier: Modifier = Modifier) {
             ),
             modifier = Modifier.fillMaxWidth()
         )
-
+        ExposedDropdownMenuBox(
+            expanded = expanded,
+            onExpandedChange = { expanded = !expanded }
+        ) {
+            OutlinedTextField(
+                value = pilihanKategori,
+                onValueChange = {},
+                placeholder = { Text(text = stringResource(R.string.kategori)) },
+                readOnly = true,
+                trailingIcon = {
+                    ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
+                },
+                modifier = Modifier.fillMaxWidth().menuAnchor()
+            )
+            ExposedDropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false }
+            ) {
+                kategori.forEach { kategoriResId ->
+                    val kategoriText = stringResource(kategoriResId)
+                    DropdownMenuItem(
+                        text = { Text(kategoriText) },
+                        onClick = {
+                            pilihanKategori = kategoriText
+                            expanded = false
+                        }
+                    )
+                }
+            }
+        }
     }
 }
 
