@@ -12,4 +12,5 @@
     <string name="simpan">Simpan</string>
     <string name="about">Tentang aplikasi</string>
     <string name="copyright">Listrik Broto merupakan sebuah aplikasi Android yang memiliki salah satu fitur yaitu kelola produk. Aplikasi ini bertujuan untuk membantu seorang wirausaha atau sejenisnya dalam mengelola produk yang akan dijual. \n\nAplikasi ini dibuat untuk mata kuliah pemrograman untuk perangkat bergerak 1. Aplikasi ini masih dalam tahap pengembangan.\n\nCopyright © 2024-2025 Aufa Riza Zaki Pradana.\nAll rights reserved</string>
+    <string name="more_options">Tentang aplikasi1</string>
 </resources>
