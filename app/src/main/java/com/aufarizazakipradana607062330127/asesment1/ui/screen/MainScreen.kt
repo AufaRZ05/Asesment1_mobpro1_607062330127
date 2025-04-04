@@ -31,6 +31,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -100,15 +101,15 @@ fun MainScreen(navController: NavHostController) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ScreenContent(modifier: Modifier = Modifier) {
-    var namaMerek by remember { mutableStateOf("") }
-    var harga by remember { mutableStateOf("") }
-    var stok by remember { mutableStateOf("") }
-    var expanded by remember { mutableStateOf(false) }
-    var pilihanKategori by remember { mutableStateOf("Pilih kategori") }
-    var pesanErrorNama by remember { mutableStateOf("") }
-    var pesanErrorHarga by remember { mutableStateOf("") }
-    var pesanErrorStok by remember { mutableStateOf("") }
-    var simpanData by remember { mutableStateOf<List<String>>(emptyList()) }
+    var namaMerek by rememberSaveable { mutableStateOf("") }
+    var harga by rememberSaveable { mutableStateOf("") }
+    var stok by rememberSaveable { mutableStateOf("") }
+    var expanded by rememberSaveable { mutableStateOf(false) }
+    var pilihanKategori by rememberSaveable { mutableStateOf("Pilih kategori") }
+    var pesanErrorNama by rememberSaveable { mutableStateOf("") }
+    var pesanErrorHarga by rememberSaveable { mutableStateOf("") }
+    var pesanErrorStok by rememberSaveable { mutableStateOf("") }
+    var simpanData by rememberSaveable { mutableStateOf<List<String>>(emptyList()) }
     val kategori = listOf(R.string.lampu, R.string.kipas_angin, R.string.speaker)
 
     Column(
