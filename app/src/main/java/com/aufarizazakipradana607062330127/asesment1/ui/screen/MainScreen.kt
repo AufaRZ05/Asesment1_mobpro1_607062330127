@@ -67,7 +67,7 @@ fun MainScreen(navController: NavHostController) {
                     IconButton(onClick = { expanded = true }) {
                         Icon(
                             imageVector = Icons.Outlined.MoreVert,
-                            contentDescription = stringResource(R.string.more_options),
+                            contentDescription = stringResource(R.string.about),
                             tint = MaterialTheme.colorScheme.primary
                         )
                     }
