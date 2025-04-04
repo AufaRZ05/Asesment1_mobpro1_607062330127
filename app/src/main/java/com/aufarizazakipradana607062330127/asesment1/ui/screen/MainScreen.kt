@@ -1,5 +1,7 @@
 package com.aufarizazakipradana607062330127.asesment1.ui.screen
 
+import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -36,6 +38,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -109,8 +112,10 @@ fun ScreenContent(modifier: Modifier = Modifier) {
     var pesanErrorNama by rememberSaveable { mutableStateOf("") }
     var pesanErrorHarga by rememberSaveable { mutableStateOf("") }
     var pesanErrorStok by rememberSaveable { mutableStateOf("") }
-    var simpanData by rememberSaveable { mutableStateOf<List<String>>(emptyList()) }
+    var simpanData by rememberSaveable { mutableStateOf<String?>(null) }
+
     val kategori = listOf(R.string.lampu, R.string.kipas_angin, R.string.speaker)
+    val context = LocalContext.current
 
     Column(
         modifier = modifier.fillMaxSize().padding(16.dp),
@@ -221,22 +226,12 @@ fun ScreenContent(modifier: Modifier = Modifier) {
         // Tombol Simpan
         Button(
             onClick = {
-                pesanErrorNama = if (namaMerek.isBlank()) "Nama merek tidak boleh kosong" else ""
-                pesanErrorHarga = if (harga.isBlank()) "Harga tidak boleh kosong" else ""
-                pesanErrorStok = if (stok.isBlank()) "Stok tidak boleh kosong" else ""
-
                 if (namaMerek.isNotBlank() && harga.isNotBlank() && stok.isNotBlank() && pilihanKategori != "Pilih kategori") {
-                    simpanData = simpanData + listOf(
-                        "Nama merek: $namaMerek\nHarga: $harga\nStok: $stok\nKategori: $pilihanKategori"
-                    )
+                    simpanData = context.getString(R.string.bagikan_template, namaMerek, harga, stok, pilihanKategori)
                     namaMerek = ""
                     harga = ""
                     stok = ""
                     pilihanKategori = "Pilih kategori"
-
-                    pesanErrorNama = ""
-                    pesanErrorHarga = ""
-                    pesanErrorStok = ""
                 }
             },
             modifier = Modifier.padding(top = 8.dp).align(Alignment.CenterHorizontally),
@@ -246,15 +241,34 @@ fun ScreenContent(modifier: Modifier = Modifier) {
         }
 
         // Menampilkan hasil simpan
-        if (simpanData.isNotEmpty()) {
+        simpanData?.let { data ->
             Spacer(modifier = Modifier.height(16.dp))
             Text(text = "Data yang disimpan:", fontWeight = FontWeight.Bold, textAlign = TextAlign.Center)
-            simpanData.forEach { data ->
-                Text(text = data, modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
-                Spacer(modifier = Modifier.height(2.dp))
+            Text(text = data, modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
+        }
+
+
+        // Tombol bagikan
+        simpanData?.let { data ->
+            Button(
+                onClick = {
+                    shareData(context, data)
+                },
+                modifier = Modifier.padding(top = 8.dp),
+                contentPadding = PaddingValues(horizontal = 32.dp, vertical = 16.dp)
+            ) {
+                Text(text = stringResource(R.string.bagikan))
             }
         }
     }
+}
+
+private fun shareData(context: Context, message: String) {
+    val shareIntent = Intent(Intent.ACTION_SEND).apply {
+        type = "text/plain"
+        putExtra(Intent.EXTRA_TEXT, message)
+    }
+    context.startActivity(Intent.createChooser(shareIntent, context.getString(R.string.bagikan)))
 }
 
 @Preview(showBackground = true)
