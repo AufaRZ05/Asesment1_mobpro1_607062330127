@@ -11,5 +11,9 @@
     <string name="lampu">Lampu</string>
     <string name="kipas_angin">Kipas angin</string>
     <string name="speaker">Speaker</string>
+    <string name="about">Tentang Aplikasi</string>
     <string name="copyright">Hak Cipta</string>
+    <string name="bagikan">bagikan</string>
+    <string name="bagikan_template">bagikan template</string>
+    <string name="listrik_broto">Toko Listrik Broto</string>
 </resources>
