@@ -59,7 +59,7 @@ fun AboutScreen(navController: NavHostController) {
                     IconButton(onClick = { expanded = true }) {
                         Icon(
                             imageVector = Icons.Outlined.MoreVert,
-                            contentDescription = stringResource(R.string.app_name),
+                            contentDescription = stringResource(R.string.kelola_produk),
                             tint = MaterialTheme.colorScheme.primary
                         )
                     }
@@ -68,7 +68,7 @@ fun AboutScreen(navController: NavHostController) {
                         onDismissRequest = { expanded = false }
                     ) {
                         DropdownMenuItem(
-                            text = { Text(stringResource(R.string.app_name)) },
+                            text = { Text(stringResource(R.string.kelola_produk)) },
                             onClick = {
                                 expanded = false
                                 navController.popBackStack()
@@ -86,10 +86,7 @@ fun AboutScreen(navController: NavHostController) {
         }
     ) { innerPadding ->
         Column(
-            modifier = Modifier
-                .padding(innerPadding)
-                .padding(16.dp)
-                .fillMaxWidth(),
+            modifier = Modifier.padding(innerPadding).padding(16.dp).fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(text = stringResource(R.string.copyright))
@@ -107,7 +104,7 @@ fun AboutScreen(navController: NavHostController) {
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.logo_listrik_broto),
-                    contentDescription = "Gambar Toko Listrik Broto",
+                    contentDescription = stringResource(R.string.listrik_broto),
                     modifier = Modifier.fillMaxWidth()
                 )
             }

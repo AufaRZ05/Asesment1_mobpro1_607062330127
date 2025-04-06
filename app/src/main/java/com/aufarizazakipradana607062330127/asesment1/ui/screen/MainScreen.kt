@@ -61,7 +61,7 @@ fun MainScreen(navController: NavHostController) {
         topBar = {
             TopAppBar(
                 title = {
-                    Text(text = stringResource(id = R.string.app_name))
+                    Text(text = stringResource(id = R.string.kelola_produk))
                 },
                 colors = TopAppBarDefaults.mediumTopAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primaryContainer,
@@ -108,7 +108,8 @@ fun ScreenContent(modifier: Modifier = Modifier) {
     var harga by rememberSaveable { mutableStateOf("") }
     var stok by rememberSaveable { mutableStateOf("") }
     var expanded by rememberSaveable { mutableStateOf(false) }
-    var pilihanKategori by rememberSaveable { mutableStateOf("Pilih kategori") }
+    val defaultKategori = stringResource(R.string.pilih_kategori)
+    var pilihanKategori by rememberSaveable { mutableStateOf(defaultKategori) }
     var pesanErrorNama by rememberSaveable { mutableStateOf("") }
     var pesanErrorHarga by rememberSaveable { mutableStateOf("") }
     var pesanErrorStok by rememberSaveable { mutableStateOf("") }
@@ -133,7 +134,7 @@ fun ScreenContent(modifier: Modifier = Modifier) {
             value = namaMerek,
             onValueChange = {
                 namaMerek = it
-                pesanErrorNama = if (it.isBlank()) "Nama merek tidak boleh kosong" else ""
+                pesanErrorNama = if (it.isBlank()) context.getString(R.string.error_nama) else ""
             },
             label = { Text(text = stringResource(R.string.nama_merek)) },
             singleLine = true,
@@ -154,7 +155,7 @@ fun ScreenContent(modifier: Modifier = Modifier) {
                 if (it.all { char -> char.isDigit() }) {
                     harga = it
                 }
-                pesanErrorHarga = if (harga.isBlank()) "Harga tidak boleh kosong" else ""
+                pesanErrorHarga = if (it.isBlank()) context.getString(R.string.error_harga) else ""
             },
             label = { Text(text = stringResource(R.string.harga)) },
             trailingIcon = { Text(text = "Rp") },
@@ -176,7 +177,7 @@ fun ScreenContent(modifier: Modifier = Modifier) {
                 if (it.all { char -> char.isDigit()}) {
                     stok = it
                 }
-                pesanErrorStok = if (it.isBlank()) "Stok tidak boleh kosong" else ""
+                pesanErrorStok = if (it.isBlank()) context.getString(R.string.error_stok) else ""
             },
             label = { Text(text = stringResource(R.string.stok)) },
             trailingIcon = { Text(text = "Item") },
@@ -242,8 +243,8 @@ fun ScreenContent(modifier: Modifier = Modifier) {
 
         // Menampilkan hasil simpan
         simpanData?.let { data ->
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(text = "Data yang disimpan:", fontWeight = FontWeight.Bold, textAlign = TextAlign.Center)
+            Spacer(modifier = Modifier.height(1.dp))
+            Text(text = stringResource(R.string.tampil_data), fontWeight = FontWeight.Bold, textAlign = TextAlign.Center)
             Text(text = data, modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
         }
 
