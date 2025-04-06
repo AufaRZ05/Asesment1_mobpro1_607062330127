@@ -1,6 +1,14 @@
 package com.aufarizazakipradana607062330127.asesment1.ui.screen
 
 import android.content.res.Configuration
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.slideInVertically
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ShoppingCart
@@ -16,11 +24,14 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -74,10 +85,33 @@ fun AboutScreen(navController: NavHostController) {
             )
         }
     ) { innerPadding ->
-        Text(
-            text = stringResource(R.string.copyright),
-            modifier = Modifier.padding(innerPadding).padding(16.dp)
-        )
+        Column(
+            modifier = Modifier
+                .padding(innerPadding)
+                .padding(16.dp)
+                .fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(text = stringResource(R.string.copyright))
+
+            Spacer(modifier = Modifier.height(32.dp))
+            var showImage by remember { mutableStateOf(false) }
+
+            LaunchedEffect(Unit) {
+                showImage = true
+            }
+
+            AnimatedVisibility(
+                visible = showImage,
+                enter = slideInVertically(initialOffsetY = { it }) + fadeIn()
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.logo_listrik_broto),
+                    contentDescription = "Gambar Toko Listrik Broto",
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+        }
     }
 }
 
