@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.outlined.MoreVert
@@ -85,8 +87,10 @@ fun AboutScreen(navController: NavHostController) {
             )
         }
     ) { innerPadding ->
+        val scrollState = rememberScrollState()
+
         Column(
-            modifier = Modifier.padding(innerPadding).padding(16.dp).fillMaxWidth(),
+            modifier = Modifier.padding(innerPadding).verticalScroll(scrollState).padding(16.dp).fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(text = stringResource(R.string.copyright))

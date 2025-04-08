@@ -11,7 +11,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.MoreVert
@@ -104,6 +106,8 @@ fun MainScreen(navController: NavHostController) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ScreenContent(modifier: Modifier = Modifier) {
+    val scrollState = rememberScrollState()
+
     var namaMerek by rememberSaveable { mutableStateOf("") }
     var harga by rememberSaveable { mutableStateOf("") }
     var stok by rememberSaveable { mutableStateOf("") }
@@ -120,7 +124,7 @@ fun ScreenContent(modifier: Modifier = Modifier) {
     val context = LocalContext.current
 
     Column(
-        modifier = modifier.fillMaxSize().padding(16.dp),
+        modifier = modifier.fillMaxSize().verticalScroll(scrollState).padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
