@@ -113,6 +113,7 @@ fun ScreenContent(modifier: Modifier = Modifier) {
     var pesanErrorNama by rememberSaveable { mutableStateOf("") }
     var pesanErrorHarga by rememberSaveable { mutableStateOf("") }
     var pesanErrorStok by rememberSaveable { mutableStateOf("") }
+    var pesanErrorKategori by rememberSaveable { mutableStateOf("") }
     var simpanData by rememberSaveable { mutableStateOf<String?>(null) }
 
     val kategori = listOf(R.string.lampu, R.string.kipas_angin, R.string.speaker)
@@ -138,6 +139,7 @@ fun ScreenContent(modifier: Modifier = Modifier) {
             },
             label = { Text(text = stringResource(R.string.nama_merek)) },
             singleLine = true,
+            isError = pesanErrorNama.isNotEmpty(),
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Text,
                 imeAction = ImeAction.Next
@@ -160,6 +162,7 @@ fun ScreenContent(modifier: Modifier = Modifier) {
             label = { Text(text = stringResource(R.string.harga)) },
             trailingIcon = { Text(text = "Rp") },
             singleLine = true,
+            isError = pesanErrorHarga.isNotEmpty(),
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Number,
                 imeAction = ImeAction.Next
@@ -182,6 +185,7 @@ fun ScreenContent(modifier: Modifier = Modifier) {
             label = { Text(text = stringResource(R.string.stok)) },
             trailingIcon = { Text(text = "Item") },
             singleLine = true,
+            isError = pesanErrorStok.isNotEmpty(),
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Number,
                 imeAction = ImeAction.Next
@@ -197,16 +201,34 @@ fun ScreenContent(modifier: Modifier = Modifier) {
             expanded = expanded,
             onExpandedChange = { expanded = !expanded }
         ) {
-            OutlinedTextField(
-                value = pilihanKategori,
-                onValueChange = {},
-                placeholder = { Text(text = stringResource(R.string.kategori)) },
-                readOnly = true,
-                trailingIcon = {
-                    ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
-                },
-                modifier = Modifier.fillMaxWidth().menuAnchor()
-            )
+            Column(modifier = Modifier.fillMaxWidth()) {
+                OutlinedTextField(
+                    value = if (pilihanKategori == context.getString(R.string.pilih_kategori)) "" else pilihanKategori,
+                    onValueChange = {},
+                    label = { Text(text = context.getString(R.string.pilih_kategori)) },
+                    readOnly = true,
+                    trailingIcon = {
+                        ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
+                    },
+                    isError = pesanErrorKategori.isNotEmpty(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .menuAnchor()
+                )
+
+                if (pesanErrorKategori.isNotEmpty()) {
+                    Text(
+                        text = pesanErrorKategori,
+                        color = Color.Red,
+                        style = MaterialTheme.typography.bodyLarge,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 10.dp)
+                    )
+                }
+            }
+
             ExposedDropdownMenu(
                 expanded = expanded,
                 onDismissRequest = { expanded = false }
@@ -217,6 +239,7 @@ fun ScreenContent(modifier: Modifier = Modifier) {
                         text = { Text(kategoriText) },
                         onClick = {
                             pilihanKategori = kategoriText
+                            pesanErrorKategori = ""
                             expanded = false
                         }
                     )
@@ -227,12 +250,48 @@ fun ScreenContent(modifier: Modifier = Modifier) {
         // Tombol Simpan
         Button(
             onClick = {
-                if (namaMerek.isNotBlank() && harga.isNotBlank() && stok.isNotBlank() && pilihanKategori != "Pilih kategori") {
-                    simpanData = context.getString(R.string.bagikan_template, namaMerek, harga, stok, pilihanKategori)
+                var isValid = true
+
+                if (namaMerek.isBlank()) {
+                    pesanErrorNama = context.getString(R.string.error_nama)
+                    isValid = false
+                } else {
+                    pesanErrorNama = ""
+                }
+
+                if (harga.isBlank()) {
+                    pesanErrorHarga = context.getString(R.string.error_harga)
+                    isValid = false
+                } else {
+                    pesanErrorHarga = ""
+                }
+
+                if (stok.isBlank()) {
+                    pesanErrorStok = context.getString(R.string.error_stok)
+                    isValid = false
+                } else {
+                    pesanErrorStok = ""
+                }
+
+                if (pilihanKategori == context.getString(R.string.pilih_kategori)) {
+                    pesanErrorKategori = context.getString(R.string.error_kategori)
+                    isValid = false
+                } else {
+                    pesanErrorKategori = ""
+                }
+
+                if (isValid) {
+                    simpanData = context.getString(
+                        R.string.bagikan_template,
+                        namaMerek,
+                        harga,
+                        stok,
+                        pilihanKategori
+                    )
                     namaMerek = ""
                     harga = ""
                     stok = ""
-                    pilihanKategori = "Pilih kategori"
+                    pilihanKategori = context.getString(R.string.pilih_kategori)
                 }
             },
             modifier = Modifier.padding(top = 8.dp).align(Alignment.CenterHorizontally),

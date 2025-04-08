@@ -20,4 +20,5 @@
     <string name="error_nama">Brand name cannot be blank</string>
     <string name="error_harga">Price cannot be blank</string>
     <string name="error_stok">Stock cannot be blank</string>
+    <string name="error_kategori">Category must be selected</string>
 </resources>
