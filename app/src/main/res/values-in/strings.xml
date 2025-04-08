@@ -18,6 +18,7 @@
     <string name="bagikan_template">Nama merek: %1$s\nHarga: %2$s\nStok: %3$s\nKategori: %4$s</string>
     <string name="listrik_broto">Toko Listrik Broto</string>
     <string name="tampil_data">Produk yang disimpan:</string>
+    <string name="kembali">Kembali</string>
     <string name="error_nama">Nama merek tidak boleh kosong</string>
     <string name="error_harga">Harga tidak boleh kosong</string>
     <string name="error_stok">Stok tidak boleh kosong</string>

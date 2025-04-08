@@ -17,6 +17,7 @@
     <string name="bagikan">Share</string>
     <string name="bagikan_template">Brand Name: %1$s\nPrice: %2$s\nStock: %3$s\nCategory: %4$s</string>
     <string name="listrik_broto">Broto Electrical Store</string>
+    <string name="kembali">Back</string>
     <string name="error_nama">Brand name cannot be blank</string>
     <string name="error_harga">Price cannot be blank</string>
     <string name="error_stok">Stock cannot be blank</string>
